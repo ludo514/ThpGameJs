@@ -26,7 +26,10 @@ class Game{
         while(this.players.length != 1){
             if(this.players[this.pos] != this.players[this.pos1] && this.players[this.pos] != null && this.players[this.pos1] != null){
                 if(this.statePlayer(this.players[this.pos].life,this.pos) && this.statePlayer(this.players[this.pos1].life, this.pos1)){
-                    this.players[this.pos].dealDamage(this.players[this.pos1])
+                    console.log("======================================================")
+                    this.skillOrNot()
+                    this.infoPlayers()
+                    console.log("======================================================")
                     this.pos = this.getRandomIntInclusive(0,this.players.length-1)
                     this.pos1 = this.getRandomIntInclusive(0,this.players.length-1)
                 }
@@ -39,9 +42,34 @@ class Game{
         this.infoPlayers()
     }
 
+    skillOrNot(){
+        let random = this.getRandomIntInclusive(0,1)
+        if(random == 0){
+            console.log("Le joueur " + this.players[this.pos].name + " utilise sont attaque de base")
+            this.players[this.pos].dealDamage(this.players[this.pos1])
+        }else if(random == 1 && this.players[this.pos].mana >= this.players[this.pos].manaCost){
+            switch(this.players[this.pos].race){
+                case "Combattant":
+                    console.log("Le joueur " + this.players[this.pos].name + " utilise le sort Dark Vision")
+                    this.players[this.pos].darkVision(this.players[this.pos1])
+                    break;
+                case "Paladin":
+                    console.log("Le joueur " + this.players[this.pos].name + " utilise le sort Lighting")
+                    this.players[this.pos].lighting(this.players[this.pos1])
+                    break;
+                case "Healer":
+                    console.log("Le joueur " + this.players[this.pos].name + " utilise le sort Soins")
+                    this.players[this.pos].heal()
+                    break;
+            }
+        }else if(random == 1  && this.players[this.pos].mana < this.players[this.pos].manaCost){
+            console.log("Le joueur " + this.players[this.pos].name + "  tante de lancer sort mais il n'a plus de mana sont tour passe ")
+        }
+    }
+
     statePlayer(life, pos){
         if(life <= 0){
-            console.log("Le joueur " + this.players[pos].name + " est mort !")
+            console.log("Le joueur " + this.players[pos].name + " na plus de point vie il est iliminé !!!")
             this.players.splice(pos, 1)
             return false
         }else{
@@ -80,8 +108,8 @@ class Game{
                 return [this.fighter = new Fighter(this.player2), this.healer = new Healer(this.player3)]
             case "Combattant":
                 return [this.paladin = new Paladin(this.player2), this.healer = new Healer(this.player3)]
-            case "healer":
-                return [this.paladin = new Paladin(this.player2), this.fighter = new Fighter(this.player2)]
+            case "Healer":
+                return [this.paladin = new Paladin(this.player2), this.fighter = new Fighter(this.player3)]
             default:
                 break;
         }
@@ -93,7 +121,12 @@ class Game{
 let player2 = prompt("Entrez le nom du deuxième joueur : ")
 let player3 = prompt("Entrez le nom du troisième joueur : ")*/
 const main = () => {
-    let game = new Game(document.getElementById("name").value, document.getElementById("classe").value)
-    game.game()
+    if(document.getElementById("name").value && document.getElementById("classe").value){
+        let game = new Game(document.getElementById("name").value, document.getElementById("classe").value)
+        game.game()
+    }else{
+        alert("Nom de personnage et classe obligatoire !!! ")
+    }
+    
 }
 document.getElementById("create").addEventListener("click", main);
