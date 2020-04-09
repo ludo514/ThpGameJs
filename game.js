@@ -1,6 +1,4 @@
-import { Fighter } from "./fighter.js";
-import { Paladin } from "./paladin.js";
-import { Healer } from "./healer.js";
+
 
 class Game{
     constructor(player1, race){

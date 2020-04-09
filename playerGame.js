@@ -1,4 +1,4 @@
-export class Player{
+class Player{
     constructor(name, life, mana, attack, def, race){
         this.name = name
         this.life = life
@@ -11,7 +11,7 @@ export class Player{
     info(){
         return " Classe du perso : " + this.race + "\n nom perso : " + this.name + "\n nombre de point de vie : " + this.life + "\n mana : " + this.mana + "\n dégats d'attaque : " + this.attack + "\n point de défence : " + this.def
     }
-    
+
     boost(){
         this.attack += 10
         console.log("Le joueur " + this.name + " est enragé il gagne 10 points de dégats, total des dégats d'attaque : " + this.attack)
