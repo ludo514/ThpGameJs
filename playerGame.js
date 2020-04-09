@@ -9,6 +9,20 @@ class Player{
     }
 
     info(){
+        switch(this.race){
+            case "Combattant":
+                document.getElementById("lifePointC").innerHTML = this.life
+                document.getElementById("manaPointC").innerHTML = this.mana
+                break;
+            case "Healer":
+                document.getElementById("lifePointH").innerHTML = this.life
+                document.getElementById("manaPointH").innerHTML = this.mana
+                break;
+            case "Paladin":
+                document.getElementById("lifePointP").innerHTML = this.life
+                document.getElementById("manaPointP").innerHTML = this.mana
+                break;
+        }
         return " Classe du perso : " + this.race + "\n nom perso : " + this.name + "\n nombre de point de vie : " + this.life + "\n mana : " + this.mana + "\n dégats d'attaque : " + this.attack + "\n point de défence : " + this.def
     }
 

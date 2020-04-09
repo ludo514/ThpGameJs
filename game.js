@@ -7,6 +7,7 @@ class Game{
         this.player3 = "Francis"
         this.players = []
         this.race = race
+        this.sleepTime = 1000
         this.bot = this.lastClasse()
         this.races = [this.choiceClasse(this.race), this.bot[0], this.bot[1]]
         this.random1 = Math.floor(Math.random() * this.races.length)
@@ -19,14 +20,17 @@ class Game{
         this.infoPlayers()
     }
 
-    game(){
-
+    async game(){
+        document.getElementById("content").classList.add("native_scroll_container")
         while(this.players.length != 1){
-            if(this.players[this.pos] != this.players[this.pos1] && this.players[this.pos] != null && this.players[this.pos1] != null){
+            await sleep(this.sleepTime)
+            if(this.players[this.pos] != this.players[this.pos1] && this.players[this.pos] != null && this.players[this.pos1] != null ){
                 if(this.statePlayer(this.players[this.pos].life,this.pos) && this.statePlayer(this.players[this.pos1].life, this.pos1)){
                     console.log("======================================================")
                     this.skillOrNot()
+                    await sleep(this.sleepTime)
                     this.infoPlayers()
+                    this.space()
                     console.log("======================================================")
                     this.pos = this.getRandomIntInclusive(0,this.players.length-1)
                     this.pos1 = this.getRandomIntInclusive(0,this.players.length-1)
@@ -36,11 +40,11 @@ class Game{
                 this.pos1 = this.getRandomIntInclusive(0,this.players.length-1)
             }
         }
-        console.log("Le joueur " + this.players[0].name + " à gagner !!!!!")
+        document.getElementById("resultat").innerHTML = "<h2>Le joueur " + this.players[0].name + " à gagner !!!!!</h2>"
         this.infoPlayers()
     }
 
-    skillOrNot(){
+    async skillOrNot(){
         let random = this.getRandomIntInclusive(0,1)
         if(random == 0){
             console.log("Le joueur " + this.players[this.pos].name + " utilise sont attaque de base")
@@ -48,23 +52,32 @@ class Game{
         }else if(random == 1 && this.players[this.pos].mana >= this.players[this.pos].manaCost){
             switch(this.players[this.pos].race){
                 case "Combattant":
+                    await sleep(this.sleepTime)
                     console.log("Le joueur " + this.players[this.pos].name + " utilise le sort Dark Vision")
                     this.players[this.pos].darkVision(this.players[this.pos1])
+                    await sleep(this.sleepTime)
                     break;
                 case "Paladin":
+                    await sleep(this.sleepTime)
                     console.log("Le joueur " + this.players[this.pos].name + " utilise le sort Lighting")
                     this.players[this.pos].lighting(this.players[this.pos1])
+                    await sleep(this.sleepTime)
                     break;
                 case "Healer":
+                    await sleep(this.sleepTime)
                     console.log("Le joueur " + this.players[this.pos].name + " utilise le sort Soins")
                     this.players[this.pos].heal()
+                    await sleep(this.sleepTime)
                     break;
             }
         }else if(random == 1  && this.players[this.pos].mana < this.players[this.pos].manaCost){
-            console.log("Le joueur " + this.players[this.pos].name + "  tante de lancer sort mais il n'a plus de mana sont tour passe ")
+            console.log("Le joueur " + this.players[this.pos].name + "  tente de lancer un sort mais il n'a plus de mana sont tour passe ")
         }
     }
-
+    space(){
+        let paragraphe = document.createElement("hr")
+        document.getElementById("state").appendChild(paragraphe)
+    }
     statePlayer(life, pos){
         if(life <= 0){
             console.log("Le joueur " + this.players[pos].name + " na plus de point vie il est iliminé !!!")
@@ -90,11 +103,17 @@ class Game{
     choiceClasse(race){
         switch (race) {
             case "Paladin":
-                return this.paladin = new Paladin(this.player1)
+                this.paladin = new Paladin(this.player1)
+                document.getElementById("nomPaladin").innerHTML = this.paladin.name
+                return this.paladin
             case "Combattant":
-                return this.fighter = new Fighter(this.player1)
+                this.fighter = new Fighter(this.player1)
+                document.getElementById("nomCombattant").innerHTML = this.fighter.name
+                return this.fighter
             case "Healer":
-                return this.healer = new Healer(this.player1)
+                this.healer = new Healer(this.player1)
+                document.getElementById("nomHealer").innerHTML = this.healer.name
+                return this.healer
             default:
                 break;
         }
@@ -103,11 +122,23 @@ class Game{
     lastClasse(){
         switch (this.race) {
             case "Paladin":
-                return [this.fighter = new Fighter(this.player2), this.healer = new Healer(this.player3)]
+                this.fighter = new Fighter(this.player2)
+                this.healer = new Healer(this.player3)
+                document.getElementById("nomCombattant").innerHTML = this.fighter.name
+                document.getElementById("nomHealer").innerHTML = this.healer.name
+                return [this.fighter, this.healer]
             case "Combattant":
-                return [this.paladin = new Paladin(this.player2), this.healer = new Healer(this.player3)]
+                this.paladin = new Paladin(this.player2)
+                this.healer = new Healer(this.player3)
+                document.getElementById("nomPaladin").innerHTML = this.paladin.name
+                document.getElementById("nomHealer").innerHTML = this.healer.name
+                return [this.paladin, this.healer]
             case "Healer":
-                return [this.paladin = new Paladin(this.player2), this.fighter = new Fighter(this.player3)]
+                this.paladin = new Paladin(this.player2)
+                this.fighter = new Fighter(this.player3)
+                document.getElementById("nomPaladin").innerHTML = this.paladin.name
+                document.getElementById("nomCombattant").innerHTML = this.fighter.name
+                return [this.paladin, this.fighter]
             default:
                 break;
         }
@@ -119,12 +150,22 @@ class Game{
 let player2 = prompt("Entrez le nom du deuxième joueur : ")
 let player3 = prompt("Entrez le nom du troisième joueur : ")*/
 const main = () => {
+    let classe = ["Paladin", "Combattant", "Healer"]
     if(document.getElementById("name").value && document.getElementById("classe").value){
-        let game = new Game(document.getElementById("name").value, document.getElementById("classe").value)
-        game.game()
+        if(classe.includes(document.getElementById("classe").value)){
+            let game = new Game(document.getElementById("name").value, document.getElementById("classe").value)
+            game.game()
+            document.getElementById("form").remove()
+        }else{
+            alert("La classe entrer n'éxiste pas !!! ")
+        }
     }else{
         alert("Nom de personnage et classe obligatoire !!! ")
     }
     
 }
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 document.getElementById("create").addEventListener("click", main);

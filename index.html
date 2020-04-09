@@ -4,20 +4,94 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
-        <form class="container">
-            <div class="form-group">
-              <label>Nom personnage : </label>
-              <input id="name" type="text" class="form-control" required>
+        
+        <div class="container ">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <h2 class="text-center"> Classes </h2>
+            <div class="card-deck">
+                <div class="card mb-3 col" style="width: 540px;">
+                    <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="https://i.imgur.com/af2giy3.jpg" class="card-img" alt="" >
+                    </div>
+                    <div class="col-md-8" >
+                        <div class="card-body">
+                        <h5 class="card-title">Combattant</h5>
+                        <p class="card-text">
+                            nom du joueur : <span id="nomCombattant"></span><br>
+                            Point de vie : <span id="lifePointC">12</span> <span id="takeDmgC"></span><br>
+                            Point de mana : <span id="manaPointC">40</span><br>
+                            Dégats : 4<br>
+                        </p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="card mb-3 col" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="https://cdna.artstation.com/p/assets/images/images/000/910/430/large/curro-rodriguez-durnobasic-front.jpg?1443931244" class="card-img" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                        <h5 class="card-title">Paladin</h5>
+                        <p class="card-text">
+                            nom du joueur : <span id="nomPaladin"></span><br>
+                            Point de vie : <span id="lifePointP">16</span><br>
+                            Point de mana : <span id="manaPointP">160</span><br>
+                            Dégats : 3<br>
+                        </p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="card mb-3 col" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="https://cdnb.artstation.com/p/assets/images/images/005/460/943/large/dae-jun-park-kmight-oldman-03.jpg?1491208980" class="card-img" alt="" style="height: 100%;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                        <h5 class="card-title">Healer</h5>
+                        <p class="card-text">
+                            
+                            nom du joueur : <span id="nomHealer"></span><br>
+                            Point de vie : <span id="lifePointH">8</span><br>
+                            Point de mana : <span id="manaPointH">200</span><br>
+                            Dégats : 2<br>
+                        </p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Classe : </label>
-                <input id="classe" type="text" class="form-control" required>
-              </div>
-            <button type="button" class="btn btn-primary" id="create">Créé</button>
-        </form>
+            <form class="container" id="form">
+                <div class="form-group">
+                  <label>Nom personnage : </label>
+                  <input id="name" type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Classe : </label>
+                    <input id="classe" type="text" class="form-control" required>
+                  </div>
+                <button type="button" class="btn btn-primary" id="create">Créé</button>
+            </form>
+            <div class="container shadow" id="content">
+                <div id="state">
+
+                </div>
+            </div>
+            <div class="container text-center">
+                <div id="resultat">
+                </div>
+            </div>
+
+        </div>
     </body>
     <script src="game.js"></script>
     <script src="playerGame.js"></script>
