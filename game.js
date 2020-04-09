@@ -40,6 +40,7 @@ class Game{
                 this.pos1 = this.getRandomIntInclusive(0,this.players.length-1)
             }
         }
+        console.log("Le joueur " + this.players[0].name + " à gagner !!!!!")
         document.getElementById("resultat").innerHTML = "<h2>Le joueur " + this.players[0].name + " à gagner !!!!!</h2>"
         this.infoPlayers()
     }
